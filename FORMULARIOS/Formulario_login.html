@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Acceso</title>
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="Formulario_login.css">
+</head>
+<body>
+    <div class="contenedor_principal">
+        <div class="encabezado_login">
+            <h1>Sistema de Acceso</h1>
+            <h2>Inicio de Sesión</h2>
+        </div>
+        
+        <form id="formulario_login" class="formulario_acceso">
+            <div class="grupo_entrada">
+                <label for="correo">Correo Electrónico</label>
+                <input type="email" id="correo" name="correo" placeholder="ejemplo@dominio.com" required>
+            </div>
+            
+            <div class="grupo_entrada">
+                <label for="clave">Contraseña</label>
+                <input type="password" id="clave" name="clave" placeholder="Ingrese su clave" required>
+            </div>
+            
+            <button type="submit" class="boton_acceso">
+                Ingresar
+            </button>
+
+            <div class="enlace_registro">
+                ¿Nuevo usuario? <a href="#">Crear cuenta</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="Formulario_login.js"></script>
+</body>
+</html>
