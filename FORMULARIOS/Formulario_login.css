@@ -1,0 +1,102 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: hsl(247, 83%, 65%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor_principal {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 380px;
+}
+
+.encabezado_login {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.encabezado_login h1 {
+    color: hsl(247, 83%, 65%);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.8rem;
+}
+
+.encabezado_login h2 {
+    color: #555;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+/* Formulario */
+.formulario_acceso {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.grupo_entrada {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.grupo_entrada label {
+    color: #555;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.grupo_entrada input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Botón */
+.boton_acceso {
+    background-color: hsl(247, 83%, 65%);
+    color: white;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.boton_acceso:hover {
+    background-color: hsl(247, 83%, 60%);
+}
+
+/* Enlace registro */
+.enlace_registro {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.enlace_registro a {
+    color: hsl(247, 83%, 65%);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.enlace_registro a:hover {
+    text-decoration: underline;
+}
