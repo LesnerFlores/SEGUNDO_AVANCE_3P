@@ -5,37 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar usuarios</title>
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="Registro_Usuario.css">
+    <script src="https://kit.fontawesome.com/1012c56298.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container mt-5">
         <h2>Registro de Nuevo Usuario</h2>
         <form id="registroForm">
             <div class="mb-3">
+                <i class="fa-solid fa-id-card"></i>
                 <label for="CodigoUsuario" class="form-label">Código Usuario</label>
                 <input type="text" class="form-control" id="CodigoUsuario" name="CodigoUsuario" required>
             </div>
             <div class="mb-3">
+                <i class="fa-solid fa-user"></i>
                 <label for="Nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="Nombre" name="Nombre" required>
             </div>
             <div class="mb-3">
+                <i class="fa-solid fa-user"></i>
                 <label for="Apellido" class="form-label">Apellido</label>
                 <input type="text" class="form-control" id="Apellido" name="Apellido" required>
             </div>
             <div class="mb-3">
+                <i class="fa-solid fa-envelope"></i>
                 <label for="Email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="Email" name="Email" required>
             </div>
             <div class="mb-3">
+                <i class="fa-solid fa-lock"></i>
                 <label for="Password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="Password" name="Password" required>
             </div>
             <div class="mb-3">
+                <i class="fa-solid fa-dice"></i>
                 <label for="Rol" class="form-label">Rol</label>
                 <input type="text" class="form-control" id="Rol" name="Rol" required>
             </div>
             <div class="mb-3">
+                <i class="fa-solid fa-lock"></i>
                 <label for="PasswordExpira" class="form-label">¿Password Expira?</label>
                 <select class="form-select" id="PasswordExpira" name="PasswordExpira">
                     <option value="true">Sí</option>
@@ -43,9 +51,11 @@
                 </select>
             </div>
             <div class="mb-3">
+                <i class="fa-solid fa-calendar-days"></i>
                 <label for="DiasCaducidad" class="form-label">Días de Caducidad de Password</label>
                 <input type="number" class="form-control" id="DiasCaducidad" name="DiasCaducidad" required>
             </div>
+            <fieldset>
             <div class="mb-3">
                 <label for="Estado" class="form-label">Estado</label>
                 <select class="form-select" id="Estado" name="Estado">
@@ -53,6 +63,7 @@
                     <option value="inactivo">Inactivo</option>
                 </select>
             </div>
+        </fieldset>
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>
 
