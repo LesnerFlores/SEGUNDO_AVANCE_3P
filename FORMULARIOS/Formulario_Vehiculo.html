@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Vehículos</title>
+    <!-- CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="Formulario_Vehiculo.css">
+    <!-- Url de Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <!-- Este es un comentario en HTML -->
+    <div class="container">
+        <!-- Botón para mostrar formulario -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <button id="btnMostrarFormulario" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Agregar Vehículo
+                </button>
+            </div>
+        </div>
+
+        <div class="consulta mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Lista de Vehículos</h3>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID VEHÍCULO</th>
+                                <th>MARCA</th>
+                                <th>MODELO</th>
+                                <th>AÑO</th>
+                                <th>FECHA MATRÍCULA</th>
+                                <th>NÚMERO PLACA</th>
+                                <th>ESTADO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="DataVehiculos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="Formulario mt-4 card" id="formularioVehiculo" style="display: none;">
+            <div class="card-header">
+                <h3 class="card-title">Agregar Vehículo</h3>
+                <button type="button" class="btn-close float-end" onclick="ocultarFormulario()"></button>
+            </div>
+            <div class="card-body">
+                <form id="FormVehiculo">
+                    <div class="mb-3">
+                        <label for="ID_VEHICULO" class="form-label">ID VEHÍCULO</label>
+                        <input type="text" class="form-control" id="ID_VEHICULO" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="MARCA" class="form-label">MARCA</label>
+                        <input type="text" class="form-control" id="MARCA" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="MODELO" class="form-label">MODELO</label>
+                        <input type="text" class="form-control" id="MODELO" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ANIO" class="form-label">AÑO</label>
+                        <input type="number" class="form-control" id="ANIO" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="FECHA_MATRICULA" class="form-label">FECHA MATRÍCULA</label>
+                        <input type="date" class="form-control" id="FECHA_MATRICULA" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NUMERO_PLACA" class="form-label">NÚMERO PLACA</label>
+                        <input type="text" class="form-control" id="NUMERO_PLACA" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ESTADO" class="form-label">ESTADO</label>
+                        <select class="form-select" id="ESTADO" required>
+                            <option value="Activo">ACTIVO</option>
+                            <option value="Inactivo">INACTIVO</option>
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-secondary me-md-2" onclick="ocultarFormulario()">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </button>
+                        <button type="button" id="btnagregar" class="btn btn-success" onclick="AgregarVehiculo()">
+                            <i class="bi bi-save"></i> Ingresar Vehículo
+                        </button>
+                        <button type="button" id="btnGuardarCambios" class="btn btn-primary" onclick="ActualizarVehiculo()" style="display: none;">
+                            <i class="bi bi-check-circle"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <!-- Archivo JS -->
+    <script src="/JavaScrip/Formulario_Vehiculo.js"></script>
+</body>
+</html>

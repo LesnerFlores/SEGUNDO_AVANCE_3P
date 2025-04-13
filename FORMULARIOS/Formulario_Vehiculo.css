@@ -1,0 +1,101 @@
+/********* ESTILOS GENERALES DEL FORMULARIO *********/
+/********* ESTILOS GENERALES DEL FORMULARIO *********/
+#formularioVehiculo {
+    transition: all 0.3s ease;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+#formularioVehiculo .card-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#formularioVehiculo .card-title {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+#formularioVehiculo .card-body {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+}
+
+#formularioVehiculo .form-control {
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out;
+}
+
+#formularioVehiculo .form-control:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25);
+}
+
+#formularioVehiculo label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+/********* ESTILOS DE BOTONES *********/
+#Btnagregarvehiculo {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+#btnagregar, #btnGuardarCambios {
+    transition: all 0.2s ease;
+}
+
+#btnagregar:hover, #btnGuardarCambios:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#btnagregar {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+#btnGuardarCambios {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-close {
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    opacity: 0.8;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+.edit-mode .card-header {
+    background-color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    #formularioVehiculo .card-body {
+        padding: 1rem;
+    }
+    
+    #Btnagregarvehiculo {
+        flex-direction: column;
+    }
+    
+    #Btnagregarvehiculo button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
