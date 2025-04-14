@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Sistema de Acceso</title>
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,7 +25,11 @@
             
             <div class="grupo_entrada">
                 <label for="clave">Contraseña</label>
-                <input type="password" id="clave" name="clave" placeholder="Ingrese su clave" required>
+                <div style="position: relative;">
+                    <input type="password" id="clave" name="clave" placeholder="Ingrese su clave" required>
+                    <i class="fa fa-eye" id="togglePassword" 
+                       style="position: absolute; right: 10px; top: 10px; cursor: pointer;"></i>
+                </div>
             </div>
             
             <button type="submit" class="boton_acceso">
@@ -38,6 +43,6 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="Formulario_login.js"></script>
+    <script src="/JAVASCRIP/Formulario_login.js"></script>
 </body>
 </html>

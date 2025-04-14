@@ -100,3 +100,17 @@ body {
 .enlace_registro a:hover {
     text-decoration: underline;
 }
+
+#togglePassword {
+    color: #666;
+    transition: color 0.3s;
+    z-index: 2;
+}
+
+#togglePassword:hover {
+    color: #333;
+}
+
+#clave {
+    padding-right: 35px !important;
+}
