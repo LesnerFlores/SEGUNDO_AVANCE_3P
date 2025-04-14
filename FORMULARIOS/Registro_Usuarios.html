@@ -14,56 +14,62 @@
         <form id="registroForm">
             <div class="mb-3">
                 <i class="fa-solid fa-id-card"></i>
-                <label for="CodigoUsuario" class="form-label">Código Usuario</label>
-                <input type="text" class="form-control" id="CodigoUsuario" name="CodigoUsuario" required>
+                <label for="codigo_usuario" class="form-label">Código Usuario</label>
+                <input type="text" class="form-control" id="codigo_usuario" name="codigo_usuario" required>
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-user"></i>
-                <label for="Nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="Nombre" name="Nombre" required>
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-user"></i>
-                <label for="Apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="Apellido" name="Apellido" required>
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" required>
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-envelope"></i>
-                <label for="Email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="Email" name="Email" required>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-lock"></i>
-                <label for="Password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="Password" name="Password" required>
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-dice"></i>
-                <label for="Rol" class="form-label">Rol</label>
-                <input type="text" class="form-control" id="Rol" name="Rol" required>
+                <label for="rol_usuario" class="form-label">Rol</label>
+                <input type="text" class="form-control" id="rol_usuario" name="rol_usuario" required>
             </div>
             <div class="mb-3">
                 <i class="fa-solid fa-lock"></i>
-                <label for="PasswordExpira" class="form-label">¿Password Expira?</label>
-                <select class="form-select" id="PasswordExpira" name="PasswordExpira">
+                <label for="password_expira" class="form-label">¿Password Expira?</label>
+                <select class="form-select" id="password_expira" name="password_expira>
                     <option value="true">Sí</option>
                     <option value="false">No</option>
                 </select>
             </div>
             <div class="mb-3">
-                <i class="fa-solid fa-calendar-days"></i>
+                <i class="dias_caducidad_password"></i>
                 <label for="DiasCaducidad" class="form-label">Días de Caducidad de Password</label>
-                <input type="number" class="form-control" id="DiasCaducidad" name="DiasCaducidad" required>
+                <input type="number" class="form-control" id="dias_caducidad_password" name="dias_caducidad_password" required>
             </div>
             <fieldset>
             <div class="mb-3">
-                <label for="Estado" class="form-label">Estado</label>
-                <select class="form-select" id="Estado" name="Estado">
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
+                <label for="estado" class="form-label">Estado</label>
+                <select class="form-select" id="estado" name="estado">
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
                 </select>
             </div>
         </fieldset>
+        <div class="mb-3" style="display: none;">
+            <input type="hidden" id="ultima_fecha" name="ultima_fecha" value="">
+            <input type="hidden" id="hora_ingreso" name="hora_ingreso" value="">
+            <input type="hidden" id="numero_intentos" name="numero_intentos" value="0">
+            <input type="hidden" id="fecha_registro" name="fecha_registro" value="">
+        </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>
 
