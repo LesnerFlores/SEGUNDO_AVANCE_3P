@@ -6,7 +6,7 @@
     const inputCorreo = document.getElementById('correo');
     const inputClave = document.getElementById('clave');
     const botonIngresar = document.querySelector('.boton_acceso');
-    const toggleClave = document.getElementById('alternar_clave');
+    const toggleClave = document.getElementById('togglePassword');
     const enlaceRegistro = document.querySelector('.enlace_registro a');
 
     // Expresión regular para email
@@ -14,18 +14,27 @@
 
     // Inicialización
     function init() {
+        if (!formulario) {
+            console.error('No se encontró el formulario con ID formulario_login');
+            return;
+        }
+
         // Eventos
         formulario.addEventListener('submit', handleSubmit);
         
         if (toggleClave) {
             toggleClave.addEventListener('click', togglePasswordVisibility);
+        } else {
+            console.warn('Elemento togglePassword no encontrado');
         }
         
         if (enlaceRegistro) {
             enlaceRegistro.addEventListener('click', (e) => {
                 e.preventDefault();
-                window.location.href = 'Registro_Usuario.html';
+                window.location.href = 'Registro_Usuarios.html';
             });
+        } else {
+            console.warn('Enlace de registro no encontrado');
         }
     }
 
@@ -50,14 +59,15 @@
 
     // Validar campos
     function validarInputs(correo, clave) {
+        limpiarErrores();
+        
         if (!correo || !clave) {
             mostrarError('Todos los campos son obligatorios');
             return false;
         }
 
         if (!emailRegex.test(correo)) {
-            mostrarError('Por favor ingrese un correo electrónico válido');
-            inputCorreo.focus();
+            mostrarError('Por favor ingrese un correo electrónico válido', inputCorreo);
             return false;
         }
 
@@ -75,35 +85,58 @@
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ email: correo })
+                body: JSON.stringify({ email: correo, password: clave })
             });
 
-            if (!respuesta.ok) {
-                throw new Error('Error en la respuesta del servidor');
-            }
+            const data = await respuesta.json();
             
-            const usuario = await respuesta.json();
-
-            if (usuario.error) {
-                throw new Error(usuario.error);
+            if (!respuesta.ok) {
+                throw new Error(data.message || 'Error en la autenticación');
             }
 
-            // Comparación de contraseña 
-            if (usuario.password !== clave) {
-                mostrarError('Contraseña incorrecta');
-                return;
+            if (!data || data.error) {
+                throw new Error(data.error || 'Credenciales incorrectas');
             }
 
-            guardarSesionUsuario(usuario);
+            // Verificación adicional de contraseña (seguridad redundante)
+            if (data.password && data.password !== clave) {
+                throw new Error('Contraseña incorrecta');
+            }
+
+            guardarSesionUsuario(data);
             redirigirAHome();
             
         } catch (error) {
             console.error('Error en autenticación:', error);
-            mostrarError(error.message.includes('servidor') 
-                ? 'Error en el servidor' 
-                : error.message);
+            mostrarError(error.message, inputClave);
         } finally {
             toggleCargando(false);
+        }
+    }
+
+    // Limpiar errores anteriores
+    function limpiarErrores() {
+        const errores = document.querySelectorAll('.error-message');
+        errores.forEach(error => error.remove());
+    }
+
+    // Mostrar mensaje de error
+    function mostrarError(mensaje, elemento = null) {
+        limpiarErrores();
+        
+        const divError = document.createElement('div');
+        divError.className = 'error-message';
+        divError.style.color = 'red';
+        divError.style.marginTop = '10px';
+        divError.textContent = mensaje;
+        
+        formulario.appendChild(divError);
+        
+        if (elemento) {
+            elemento.focus();
+            if (elemento === inputClave) {
+                elemento.value = '';
+            }
         }
     }
 
@@ -116,24 +149,6 @@
             botonIngresar.innerHTML = 'Ingresar';
             botonIngresar.disabled = false;
         }
-    }
-
-    // Mostrar mensaje de error
-    function mostrarError(mensaje) {
-        const errorExistente = document.querySelector('.error-message');
-        if (errorExistente) {
-            errorExistente.remove();
-        }
-        
-        const divError = document.createElement('div');
-        divError.className = 'error-message';
-        divError.style.color = 'red';
-        divError.style.marginTop = '10px';
-        divError.textContent = mensaje;
-        
-        formulario.appendChild(divError);
-        inputClave.value = '';
-        inputClave.focus();
     }
 
     // Guardar datos de usuario
@@ -151,6 +166,6 @@
         window.location.href = 'Formulario_HOME.html';
     }
 
-    // Iniciar
-    init();
+    // Iniciar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', init);
 })();
