@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="./eliminar_usuario.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Usuarios</h1>
+        
+        <div id="alertSuccess" class="alert alert-success"></div>
+        <div id="alertError" class="alert alert-danger"></div>
+        
+        <div id="userCount" class="user-count"></div>
+        
+        <div id="loading" class="loading">Cargando usuarios...</div>
+        <table id="usuariosTable">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="usuariosBody">
+                <!-- Aquí se cargarán dinámicamente los usuarios -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../JAVASCRIP/eliminar-usuario.js"></script>
+</body>
+</html>
