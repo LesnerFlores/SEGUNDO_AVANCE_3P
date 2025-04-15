@@ -1,172 +1,156 @@
-// usuario_login.js - Versión optimizada con navegación a registro
 (() => {
     'use strict';
     
-    // Configuración
-    const CONFIG = {
-        URL_API: 'http://localhost:5007/usuario/buscarporEmail',
-        SELECTORS: {
-            FORM: '#formulario_login',
-            EMAIL: '#correo',
-            PASSWORD: '#clave',
-            SUBMIT_BTN: '#formulario_login button[type="submit"]',
-            TOGGLE_PW: '#togglePassword',
-            REGISTER_LINK: '.enlace_registro a' // Nuevo selector
-        },
-        STORAGE_KEYS: {
-            USER: 'usuario'
-        },
-        PAGES: {
-            REGISTER: 'Registro_Usuario.html', // Ruta al formulario de registro
-            HOME: 'Formulario_HOME.html'
-        }
-    };
+    // Elementos del formulario
+    const formulario = document.getElementById('formulario_login');
+    const inputCorreo = document.getElementById('correo');
+    const inputClave = document.getElementById('clave');
+    const botonIngresar = document.querySelector('.boton_acceso');
+    const toggleClave = document.getElementById('alternar_clave');
+    const enlaceRegistro = document.querySelector('.enlace_registro a');
 
-    // Verificación de jQuery
-    if (typeof $ === 'undefined') {
-        alert('Error: jQuery no está cargado. Recarga la página.');
-        return;
-    }
-
-    // Cache de elementos DOM
-    const DOM = {
-        form: $(CONFIG.SELECTORS.FORM),
-        email: $(CONFIG.SELECTORS.EMAIL),
-        password: $(CONFIG.SELECTORS.PASSWORD),
-        submitBtn: $(CONFIG.SELECTORS.SUBMIT_BTN),
-        togglePw: $(CONFIG.SELECTORS.TOGGLE_PW),
-        registerLink: $(CONFIG.SELECTORS.REGISTER_LINK) // Nuevo elemento cacheado
-    };
-
-    // Expresión regular precompilada
-    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Expresión regular para email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Inicialización
     function init() {
-        DOM.form.on('submit', handleSubmit);
-        setupPasswordToggle();
-        setupRegisterLink();
-    }
-
-    // Configuración del toggle de contraseña
-    function setupPasswordToggle() {
-        if (DOM.togglePw.length) {
-            DOM.togglePw.on('click', function() {
-                const isPassword = DOM.password.attr('type') === 'password';
-                DOM.password.attr('type', isPassword ? 'text' : 'password');
-                $(this)
-                    .toggleClass('fa-eye fa-eye-slash')
-                    .attr('aria-label', isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
-            }).attr('aria-label', 'Mostrar contraseña');
+        // Eventos
+        formulario.addEventListener('submit', handleSubmit);
+        
+        if (toggleClave) {
+            toggleClave.addEventListener('click', togglePasswordVisibility);
         }
-    }
-
-    // Configuración del enlace de registro - NUEVA FUNCIÓN
-    function setupRegisterLink() {
-        if (DOM.registerLink.length) {
-            DOM.registerLink.on('click', function(e) {
+        
+        if (enlaceRegistro) {
+            enlaceRegistro.addEventListener('click', (e) => {
                 e.preventDefault();
-                window.location.href = CONFIG.PAGES.REGISTER;
+                window.location.href = 'Registro_Usuario.html';
             });
         }
     }
 
-    // Función principal
-    function handleSubmit(e) {
-        e.preventDefault();
-        
-        const credentials = {
-            email: DOM.email.val().trim(),
-            password: DOM.password.val().trim()
-        };
-
-        if (!validateInputs(credentials)) return;
-        
-        authenticateUser(credentials);
+    // Mostrar/ocultar contraseña
+    function togglePasswordVisibility() {
+        const esPassword = inputClave.type === 'password';
+        inputClave.type = esPassword ? 'text' : 'password';
+        this.classList.toggle('fa-eye-slash');
     }
 
-    // Validación de campos
-    function validateInputs({ email, password }) {
-        if (!email || !password) {
-            showError('Todos los campos son obligatorios');
+    // Manejar envío del formulario
+    async function handleSubmit(e) {
+        e.preventDefault();
+        
+        const correo = inputCorreo.value.trim();
+        const clave = inputClave.value.trim();
+
+        if (!validarInputs(correo, clave)) return;
+        
+        await autenticarUsuario(correo, clave);
+    }
+
+    // Validar campos
+    function validarInputs(correo, clave) {
+        if (!correo || !clave) {
+            mostrarError('Todos los campos son obligatorios');
             return false;
         }
 
-        if (!EMAIL_REGEX.test(email)) {
-            showError('Por favor ingrese un correo electrónico válido');
-            DOM.email.focus();
+        if (!emailRegex.test(correo)) {
+            mostrarError('Por favor ingrese un correo electrónico válido');
+            inputCorreo.focus();
             return false;
         }
 
         return true;
     }
 
-    // Autenticación con el servidor
-    async function authenticateUser({ email, password }) {
+    // Autenticar usuario
+    async function autenticarUsuario(correo, clave) {
         try {
-            toggleLoading(true);
+            toggleCargando(true);
             
-            const user = await $.ajax({
-                url: CONFIG.URL_API,
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ email })
+            const respuesta = await fetch('http://localhost:5007/usuario/buscarporEmail', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ email: correo })
             });
 
-            if (!user || typeof user !== 'object') {
-                throw new Error('Respuesta del servidor inválida');
+            if (!respuesta.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            
+            const usuario = await respuesta.json();
+
+            if (usuario.error) {
+                throw new Error(usuario.error);
             }
 
-            if (user.error) {
-                throw new Error(user.error);
-            }
-
-            if (user.password !== password) {
-                showError('Contraseña incorrecta');
+            // Comparación de contraseña 
+            if (usuario.password !== clave) {
+                mostrarError('Contraseña incorrecta');
                 return;
             }
 
-            saveUserSession(user);
-            redirectToHome();
+            guardarSesionUsuario(usuario);
+            redirigirAHome();
             
         } catch (error) {
             console.error('Error en autenticación:', error);
-            showError(error.message.includes('servidor') 
+            mostrarError(error.message.includes('servidor') 
                 ? 'Error en el servidor' 
                 : error.message);
         } finally {
-            toggleLoading(false);
+            toggleCargando(false);
         }
     }
 
-    // Helpers
-    function toggleLoading(show) {
-        DOM.submitBtn.html(show 
-            ? '<i class="fa fa-spinner fa-spin"></i> Verificando...' 
-            : 'Ingresar');
+    // Mostrar estado de carga
+    function toggleCargando(mostrar) {
+        if (mostrar) {
+            botonIngresar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+            botonIngresar.disabled = true;
+        } else {
+            botonIngresar.innerHTML = 'Ingresar';
+            botonIngresar.disabled = false;
+        }
     }
 
-    function showError(message) {
-        $('.error-message').remove();
-        DOM.form.append(
-            `<div class="error-message" style="color:red; margin-top:10px;">${message}</div>`
-        );
-        DOM.password.val('').focus();
+    // Mostrar mensaje de error
+    function mostrarError(mensaje) {
+        const errorExistente = document.querySelector('.error-message');
+        if (errorExistente) {
+            errorExistente.remove();
+        }
+        
+        const divError = document.createElement('div');
+        divError.className = 'error-message';
+        divError.style.color = 'red';
+        divError.style.marginTop = '10px';
+        divError.textContent = mensaje;
+        
+        formulario.appendChild(divError);
+        inputClave.value = '';
+        inputClave.focus();
     }
 
-    function saveUserSession(user) {
-        sessionStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify({
-            nombre: user.nombre,
-            email: user.email,
-            rol: user.rol_usuario,
-            codigo: user.codigo_usuario
+    // Guardar datos de usuario
+    function guardarSesionUsuario(usuario) {
+        sessionStorage.setItem('usuario', JSON.stringify({
+            nombre: usuario.nombre,
+            email: usuario.email,
+            rol: usuario.rol_usuario,
+            codigo: usuario.codigo_usuario
         }));
     }
 
-    function redirectToHome() {
-        window.location.href = CONFIG.PAGES.HOME;
+    // Redirigir a HOME
+    function redirigirAHome() {
+        window.location.href = 'Formulario_HOME.html';
     }
 
-    // Iniciar la aplicación
+    // Iniciar
     init();
 })();
